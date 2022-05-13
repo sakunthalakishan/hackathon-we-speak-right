@@ -5,8 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Person {
     
@@ -18,7 +16,6 @@ public class Person {
     private String lastName;
     private String preferName;
 
-    //@JsonIgnore
     private String audioFileLocation;
 
     public Integer getId() {

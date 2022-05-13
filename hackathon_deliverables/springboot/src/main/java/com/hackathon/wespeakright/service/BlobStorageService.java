@@ -21,16 +21,6 @@ public class BlobStorageService {
     @Value("${wespeakaudio.storage.containername}")
     String containerName;
 
- /*   BlobContainerClient container;
-
-    public BlobStorageService( @Value("${wespeakaudio.storage.connectionstring}") String connectionStr,
-    @Value("${wespeakaudio.storage.containername}") String containerName) {
-        container = new BlobContainerClientBuilder()
-        .connectionString(connectionStr)
-        .containerName(containerName)
-        .buildClient();
-    }
-*/
     public BlobContainerClient getBlobContainerClient() {
         return new BlobContainerClientBuilder()
         .connectionString(connectionStr)

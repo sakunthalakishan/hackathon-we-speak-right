@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Calendar;
 
-import com.hackathon.utils.Utilities;
+import com.hackathon.wespeakright.utils.Utilities;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 
@@ -56,9 +56,7 @@ public class TextToSpeechService {
 
         voice.deallocate();
         player.close();
-
-
-    
+ 
         return getStream(fileName+".wav");
 
     }
@@ -70,28 +68,11 @@ public class TextToSpeechService {
         InputStream is = new FileInputStream(file);
 
         StreamingResponseBody stream = Utilities.convert(is);
-        /*
-        StreamingResponseBody stream = out -> {
-            byte[] buf = new byte[8192];
-            int c;
 
-            while((c=is.read(buf,0,buf.length)) >0) {
-                out.write(buf,0,c);
-                out.flush();
-            }
-            out.close();
-            is.close();
-        };
-*/
         System.out.println("delete of file " + fullFileName + " is " + file.delete());
-        
-        System.out.println("before returning stream");
-        
 
         return stream;
 
     }
-
-    
 
 }

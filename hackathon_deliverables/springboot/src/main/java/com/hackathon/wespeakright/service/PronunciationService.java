@@ -8,9 +8,9 @@ import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 
-import com.hackathon.utils.Utilities;
 import com.hackathon.wespeakright.entity.Person;
 import com.hackathon.wespeakright.repository.PersonRepository;
+import com.hackathon.wespeakright.utils.Utilities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -28,12 +28,6 @@ public class PronunciationService {
 
     @Autowired
     public BlobStorageService blobStorageService;
-
-    /*public Integer savePostData(PersonAudio personAudio) {
-        System.out.println("Pronunciation Service before save record to Database");
-        return saveRecord(personAudio, null);
-
-    }*/
 
     public List<Person> getAllPersons() {
         return personRepository.findAll(Sort.by("id").descending());
@@ -118,11 +112,11 @@ public class PronunciationService {
     public Integer savePostData(PersonAudio personAudio) throws IOException {
 
         String encodedString = personAudio.getAudioBase64();
-        byte[] audioContent = Base64.getMimeDecoder().decode(encodedString);
-
+        
         String audioFileLocation = null;
 
-        if(encodedString != null) {
+        if(encodedString != null && encodedString.trim().length() != 0) {
+            byte[] audioContent = Base64.getMimeDecoder().decode(encodedString);
             long timeInMillis = Calendar.getInstance().getTimeInMillis();
             String fileName = personAudio.getFirstName()+personAudio.getLastName()+timeInMillis+".wav";
             audioFileLocation = blobStorageService.uploadAudioBlob(audioContent, fileName);
@@ -133,9 +127,6 @@ public class PronunciationService {
 
     public Integer saveData(PersonAudio personAudio, byte[] audioContent) throws IOException {
 
-        //String encodedString = personAudio.getAudioBase64();
-        //byte[] audioContent = Base64.getMimeDecoder().decode(encodedString);
-
         String audioFileLocation = null;
 
         if(audioContent != null) {
@@ -144,7 +135,7 @@ public class PronunciationService {
             String fileName = personAudio.getFirstName()+personAudio.getLastName()+timeInMillis+".wav";
             System.out.println("filename before storage upload "+ fileName);
             audioFileLocation = blobStorageService.uploadAudioBlob(audioContent, fileName);
-            System.out.println("audion saved at " + audioFileLocation);
+            System.out.println("audio saved at " + audioFileLocation);
         }
         
         return saveRecord(personAudio, audioFileLocation);

@@ -1,4 +1,4 @@
-package com.hackathon.utils;
+package com.hackathon.wespeakright.utils;
 
 import java.io.InputStream;
 
@@ -13,7 +13,6 @@ public class Utilities {
             int c;
 
             while((c=is.read(buf,0,buf.length)) >0) {
-                System.out.println("bytes="+ c);
                 out.write(buf,0,c);
                 out.flush();
             }
@@ -21,7 +20,7 @@ public class Utilities {
             out.close();
             is.close();
         };
-
+        
         return stream;
     }
     
