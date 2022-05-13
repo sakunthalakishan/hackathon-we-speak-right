@@ -1,0 +1,47 @@
+<div class="container wrapper wrapper2" class=".container">
+  <div class="row">
+    <!-- Form -->
+    <div class="col-md-12" >
+      <h1>We Speak Right</h1>
+      <form [formGroup]="profileForm" (ngSubmit)="submitForm()" novalidate>
+        <div class="form-group" >
+          <label>First Name</label>
+          <input type="text" formControlName="firstName" class="form-control" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" formControlName="lastName" class="form-control" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label>Prefer Name</label>
+          <input type="text" formControlName="preferName" class="form-control" maxlength="20">
+        </div>
+
+        <div class="form-group">
+          <label for="standard">Standard Pronunciation</label>
+          <input name="fav_pronun" type="radio" id="standard" value="standard" class="input-group" (change)="hide($event)">
+          <label for="custom">Custom Pronunciation</label>
+          <input name="fav_pronun" type="radio" id="custom" value="custom"  class="input-group" (change)="show($event)">
+        </div>
+
+        <div  *ngIf="custom">
+          <button (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" > Start Recording </button>
+          <button (click)="stopRecording()" class="btn btn-danger" *ngIf="recording"> Stop Recording </button>
+          <audio controls="" *ngIf="url">
+            <source [src]="sanitize(url)" type="audio/wav">
+          </audio>
+        </div>
+        <div>
+          <label class="">Done?</label>
+          <div class="col-md-12 text-center ">
+          <button type="submit" class="btn btn-primary btn"[disabled]="profileForm.invalid">Submit</button>
+          </div>
+        </div>
+        <div *ngIf="success">
+          <label>Submitted Successfully !!!!</label>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
