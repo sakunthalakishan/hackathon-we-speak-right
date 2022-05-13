@@ -4,4 +4,5 @@ export class Profile {
    lastName: string;
    preferName: string;
    audioBase64: string;
+   custom: boolean;
 }

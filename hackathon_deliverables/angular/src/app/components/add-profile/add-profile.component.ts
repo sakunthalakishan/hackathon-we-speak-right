@@ -23,6 +23,7 @@ export class AddProfileComponent implements OnInit {
   recording = false;
   url;
   error;
+  id;
 
   ngOnInit() {
     this.addProfile();
@@ -42,6 +43,7 @@ export class AddProfileComponent implements OnInit {
       preferName: [''],
       audioBase64: ['']
     });
+    this.custom = false;
   }
   submitForm() {
     if( localStorage.getItem("audio")!=null){
@@ -51,8 +53,10 @@ export class AddProfileComponent implements OnInit {
     }
     localStorage.clear();
     this.profileService.CreateProfile(this.profileForm.value).subscribe((res) => {
-      console.log('Profile added!');
-      //this.ngZone.run() => this.router.navigateByUrl('/profiles-list'));
+      console.log('Profile added!'+res);
+      this.id = res;
+      this.success=true;
+      this.addProfile();
     });
   }
   //Recording Methods
@@ -66,6 +70,7 @@ export class AddProfileComponent implements OnInit {
     this.success = false;
     this.url = null;
     this.recording = true;
+    localStorage.clear();
     let mediaConstraints = {
     video: false,
     audio: true
@@ -116,16 +121,15 @@ export class AddProfileComponent implements OnInit {
     this.error = 'Can not play audio in your browser';
   }
 
-   hide(e){
-    this.custom = false;
-    this.success = false;
-    this.url = null;
-    localStorage.clear();
+  clear() {
+    if (!this.custom) {
+      this.url=null;
+      this.success = false;
+      localStorage.clear();
+    }
   }
 
-  show(e){
-    this.custom = true;
-    this.success = false;
-    localStorage.clear();
+  getAllProfiles() {
+    this.ngZone.run(() => this.router.navigateByUrl('/profiles-list'));
   }
 }
