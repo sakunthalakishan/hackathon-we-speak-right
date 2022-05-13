@@ -1,0 +1,39 @@
+<div class="container wrapper">
+  <div class="row">
+    <!-- Issue table -->
+    <div class="col-md-12">
+      <div class="inner">
+        <h1>Employee Preferred Pronunciation</h1>
+        <div class="form-group">
+          <label for="search-text">Search Text</label>
+          <input type="text" class="form-control search-field" id="search-text" aria-describedby="search-text"
+                 [(ngModel)]="searchText" placeholder="Enter text to search"
+                 autofocus>
+        </div>
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Preferred Name</th>
+            <th scope="col">Pronunciation</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let profiles of ProfileList | appFilter: searchText">
+            <td>{{profiles.id}}</td>
+            <td>{{profiles.firstName}}</td>
+            <td>{{profiles.lastName}}</td>
+            <td>{{profiles.preferName}}</td>
+            <td ><button class="btn btn-info btn-sm" ><a href="{{url}}{{profiles.id}}">Click to Hear</a></button></td>
+            <td>
+              <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfile(profiles)">Remove</button>
+            </td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
