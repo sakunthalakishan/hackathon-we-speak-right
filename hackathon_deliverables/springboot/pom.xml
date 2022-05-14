@@ -51,6 +51,17 @@
 			<version>1.2.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.microsoft.cognitiveservices.speech</groupId>
+			<artifactId>client-sdk</artifactId>
+			<version>1.19.0</version>
+		</dependency>
+<!--
+		<dependency>
+			<groupId>com.microsoft.cognitiveservices.speech</groupId>
+			<artifactId>client-jar-sdk</artifactId>
+			<version>1.14.0</version>
+		</dependency>  -->
 
 	</dependencies>
 

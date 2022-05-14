@@ -3,6 +3,7 @@ package com.hackathon.wespeakright.controllers;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import com.hackathon.wespeakright.entity.Person;
 import com.hackathon.wespeakright.service.BlobStorageService;
@@ -40,13 +41,16 @@ public class PronunciationController  {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<StreamingResponseBody> pronunceName(@PathVariable("name") String name) throws FileNotFoundException {
+    public ResponseEntity<StreamingResponseBody> pronunceNameWithSpeedWithCountry(
+        @PathVariable("name") String name,
+        @RequestParam(required=false) String country,
+        @RequestParam(required=false) String speed) throws FileNotFoundException, InterruptedException, ExecutionException {
 
-        System.out.println("Pronunce name "+ name);
+        System.out.println("Pronunce name with Speed and Country "+ name);
     
         return ResponseEntity.ok()
                 .contentType(MediaType.valueOf("audio/wav"))
-                .body(pronunciationService.getAudio(name, 150));
+                .body(pronunciationService.getAudio(name, country, speed));
     }
 
     @DeleteMapping("/{id}")
@@ -58,12 +62,11 @@ public class PronunciationController  {
 
     }
 
-
     @PostMapping(value="/record", produces=MediaType.APPLICATION_JSON_VALUE, 
                                     consumes=MediaType.APPLICATION_JSON_VALUE)
     public Integer savePostData(@RequestBody PersonAudio requestBody) throws IOException {
 
-        System.out.println("Save Person POST "+ requestBody);
+        //System.out.println("Save Person POST "+ requestBody);
         return pronunciationService.savePostData(requestBody);
 
     }
@@ -78,7 +81,7 @@ public class PronunciationController  {
         person.setLastName(lastName);
         person.setPreferName(preferName);
 
-        System.out.println("Save Person POST form data" );
+        //System.out.println("Save Person POST form data" );
         return pronunciationService.saveData(person, file.getBytes());
 
     }
@@ -86,7 +89,6 @@ public class PronunciationController  {
     @GetMapping(value="/list/allPersons", produces=MediaType.APPLICATION_JSON_VALUE)
     public List<Person> getAllPersons() {
         System.out.println("Get All Persons");
-        //List<Person> all = pronunciationService.getAllPersons();
         return pronunciationService.getAllPersons();
     }
 

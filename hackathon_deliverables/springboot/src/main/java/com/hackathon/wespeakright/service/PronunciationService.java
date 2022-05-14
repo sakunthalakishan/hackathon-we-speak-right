@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import com.hackathon.wespeakright.entity.Person;
 import com.hackathon.wespeakright.repository.PersonRepository;
@@ -25,6 +26,9 @@ public class PronunciationService {
 
     @Autowired
     TextToSpeechService textToSpeechService;
+
+    @Autowired
+    CognitiveAzureSpeechService cognitiveSpeechService;
 
     @Autowired
     public BlobStorageService blobStorageService;
@@ -82,6 +86,39 @@ public class PronunciationService {
         }
 
     }
+
+    public StreamingResponseBody getAudio(String name, String country, String speed) throws InterruptedException, ExecutionException, FileNotFoundException {
+
+        int id =0;
+
+        String pronunceName = null;
+
+        try{
+            id = Integer.parseInt(name);
+        } catch(NumberFormatException ne) {
+            System.out.println("Not ID, use Standard Pronunciation");
+            pronunceName = name;
+        }
+
+        if(id != 0) {
+            Person p = personRepository.getById(id);
+            String fileLocation = p.getAudioFileLocation();
+            if(fileLocation != null) {
+                return getStreamFromStorage(fileLocation);
+            }
+
+            if(p.getPreferName() != null && p.getPreferName().trim().length() != 0) pronunceName = p.getPreferName();
+            else pronunceName = p.getFirstName();
+        }
+
+        if(pronunceName != null) {
+            return cognitiveSpeechService.convertTextToSpeech(pronunceName, country, speed);
+        } else {
+            System.out.println("No name to pronunce");
+            throw new RuntimeException();
+        }
+
+    }   
 
     public StreamingResponseBody getStreamFromStorage(String fileName) throws FileNotFoundException {
 
