@@ -5,4 +5,5 @@ export class Profile {
    preferName: string;
    audioBase64: string;
    custom: boolean;
+   audioFileLocation:string;
 }

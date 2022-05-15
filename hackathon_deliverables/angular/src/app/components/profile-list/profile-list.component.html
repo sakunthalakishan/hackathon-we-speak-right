@@ -3,11 +3,25 @@
     <!-- Issue table -->
     <div class="col-md-12">
       <div class="inner">
-        <h1>Employee Preferred Pronunciation</h1>
+        <h1 class="p-md-4">WE SPEAK RIGHT ADMIN</h1>
+        <div class="form-group">
+          <label for="selectedCountry">Country</label>
+          <select id="selectedCountry" [(ngModel)]="selectedCountry" class="form-control" [ngModelOptions]="{standalone: true}" (change)=changeCountry($event)>
+            <option disabled>Select Country</option>
+            <option *ngFor="let country of bindedCountryKeys">{{country}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="selectedSpeed">Speed</label>
+          <select id="selectedSpeed" [(ngModel)]="selectedSpeed" class="form-control" [ngModelOptions]="{standalone: true}">
+            <option disabled>Select Speed</option>
+            <option *ngFor="let speed of speedList">{{speed}}</option>
+          </select>
+        </div>
         <div class="form-group">
           <label for="search-text">Search Text</label>
           <input type="text" class="form-control search-field" id="search-text" aria-describedby="search-text"
-                 [(ngModel)]="searchText" placeholder="Enter text to search"
+                 [(ngModel)]="searchText"  placeholder="Enter text to search"
                  autofocus>
         </div>
         <table class="table table-bordered table-striped">
@@ -18,6 +32,7 @@
             <th scope="col">Last Name</th>
             <th scope="col">Preferred Name</th>
             <th scope="col">Pronunciation</th>
+            <th scope="col">Custom</th>
             <th scope="col">Action</th>
           </tr>
           </thead>
@@ -27,9 +42,11 @@
             <td>{{profiles.firstName}}</td>
             <td>{{profiles.lastName}}</td>
             <td>{{profiles.preferName}}</td>
-            <td ><button class="btn btn-warning btn-sm" ><a href="{{url}}{{profiles.id}}">Click to Hear</a></button></td>
+            <td ><button class="btn btn-warning btn-sm" ><a href="{{url}}{{profiles.id}}?country={{country}}&speed={{selectedSpeed}}">Click to Hear</a></button></td>
+            <td *ngIf="!(profiles.audioFileLocation==null)">Yes</td>
+            <td *ngIf="(profiles.audioFileLocation==null)">No</td>
             <td>
-              <button type="button" class="btn btn-danger btn-sm" (click)="deleteProfile(profiles)">Remove</button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="clickMethod(profiles,profiles.id)">Remove</button>
             </td>
           </tbody>
         </table>
