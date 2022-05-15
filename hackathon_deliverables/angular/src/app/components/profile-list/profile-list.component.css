@@ -17,3 +17,14 @@ font-weight: bold;
 text-transform: uppercase;
 text-align: center;
 }
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+  font-weight: bold;
+}

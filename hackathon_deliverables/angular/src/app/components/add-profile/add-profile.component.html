@@ -2,7 +2,7 @@
   <div class="row">
     <!-- Form -->
     <div class="col-md-12" >
-      <h1>We Speak Right</h1>
+      <h1 class="p-md-4">We Speak Right</h1>
       <form [formGroup]="profileForm" (ngSubmit)="submitForm()" novalidate>
         <div class="form-group" >
           <label>First Name</label>
@@ -36,7 +36,8 @@
         </div>
         <div *ngIf="success" class="col-md-auto text-center ">
           <label>ID Number: {{id}} Created successfully !!!</label>
-          <br>
+        </div>
+        <div class="col-md-auto text-center p-md-5">
           <button (click)="getAllProfiles()" class="btn btn-warning" *ngIf="!recording" > List All Profiles </button>
         </div>
 
