@@ -25,9 +25,6 @@ public class PronunciationService {
     PersonRepository personRepository;
 
     @Autowired
-    TextToSpeechService textToSpeechService;
-
-    @Autowired
     CognitiveAzureSpeechService cognitiveSpeechService;
 
     @Autowired
@@ -51,39 +48,6 @@ public class PronunciationService {
 
         System.out.println("Details saved for " + result);
         return result;
-
-    }
-
-    public StreamingResponseBody getAudio(String name, int speed) throws FileNotFoundException{
-
-        int id =0;
-
-        String pronunceName = null;
-
-        try{
-            id = Integer.parseInt(name);
-        } catch(NumberFormatException ne) {
-            System.out.println("Not ID, use Standard Pronunciation");
-            pronunceName = name;
-        }
-
-        if(id != 0) {
-            Person p = personRepository.getById(id);
-            String fileLocation = p.getAudioFileLocation();
-            if(fileLocation != null) {
-                return getStreamFromStorage(fileLocation);
-            }
-
-            if(p.getPreferName() != null && p.getPreferName().trim().length() != 0) pronunceName = p.getPreferName();
-            else pronunceName = p.getFirstName();
-        }
-
-        if(pronunceName != null) {
-            return textToSpeechService.standardPronunciation(pronunceName,speed);
-        } else {
-            System.out.println("No name to pronunce");
-            throw new RuntimeException();
-        }
 
     }
 

@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.6.7</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> 
 	</parent>
 	<groupId>com.hackathon</groupId>
 	<artifactId>wespeakright</artifactId>
@@ -46,22 +46,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.sf.sociaal</groupId>
-			<artifactId>freetts</artifactId>
-			<version>1.2.2</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.microsoft.cognitiveservices.speech</groupId>
 			<artifactId>client-sdk</artifactId>
 			<version>1.19.0</version>
 		</dependency>
-<!--
-		<dependency>
-			<groupId>com.microsoft.cognitiveservices.speech</groupId>
-			<artifactId>client-jar-sdk</artifactId>
-			<version>1.14.0</version>
-		</dependency>  -->
 
 	</dependencies>
 

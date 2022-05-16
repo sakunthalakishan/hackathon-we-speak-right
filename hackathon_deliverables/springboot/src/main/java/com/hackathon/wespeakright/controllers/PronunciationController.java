@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 
@@ -29,16 +28,6 @@ public class PronunciationController  {
     @Autowired
     public PronunciationService pronunciationService;
 
-    @GetMapping("/speed/{name}")
-    public ResponseEntity<StreamingResponseBody> pronunceNameWithSpeed(@PathVariable("name") String name,
-    @RequestParam(required=false) Integer speed) throws FileNotFoundException {
-
-        System.out.println("Pronunce name with Speed"+ name);
-    
-        return ResponseEntity.ok()
-                .contentType(MediaType.valueOf("audio/wav"))
-                .body(pronunciationService.getAudio(name, speed));
-    }
 
     @GetMapping("/{name}")
     public ResponseEntity<StreamingResponseBody> pronunceNameWithSpeedWithCountry(
@@ -71,20 +60,6 @@ public class PronunciationController  {
 
     }
 
-    @PostMapping(value="/recordname")
-    public Integer saveData(@RequestParam String firstName, 
-                            @RequestParam String lastName, 
-                            @RequestParam(required=false) String preferName, 
-                            @RequestParam(required=false) MultipartFile file) throws IOException {
-        PersonAudio person = new PersonAudio();
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setPreferName(preferName);
-
-        //System.out.println("Save Person POST form data" );
-        return pronunciationService.saveData(person, file.getBytes());
-
-    }
 
     @GetMapping(value="/list/allPersons", produces=MediaType.APPLICATION_JSON_VALUE)
     public List<Person> getAllPersons() {
